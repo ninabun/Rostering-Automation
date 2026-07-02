@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Rostering Automation Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>AI Rostering Automation</h1>
+      <p>Multi-department demo: staff, requests, criteria and monthly roster generation.</p>
+    </div>
+    <div class="actions">
+      <button id="generateBtn">Generate</button>
+      <button id="exportBtn">Export</button>
+      <button id="printBtn">Print</button>
+      <button id="resetBtn">Reset Demo</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel">
+      <section>
+        <h2>Department</h2>
+        <label>
+          Active department
+          <select id="departmentSelect"></select>
+        </label>
+        <button id="addDeptBtn">Add department</button>
+      </section>
+
+      <section>
+        <h2>Period</h2>
+        <label>
+          Start date
+          <input id="startDate" type="date">
+        </label>
+        <p>Demo generates 4 weeks from the selected date.</p>
+      </section>
+
+      <section>
+        <h2>Request / Fixed Duty</h2>
+        <label>
+          Type
+          <select id="requestType">
+            <option value="request">Staff request</option>
+            <option value="fixed">Fixed assignment</option>
+          </select>
+        </label>
+        <label>
+          Staff
+          <select id="requestStaff"></select>
+        </label>
+        <label>
+          Date
+          <select id="requestDay"></select>
+        </label>
+        <label>
+          Duty
+          <select id="requestDuty"></select>
+        </label>
+        <label>
+          Note
+          <input id="requestNote" placeholder="Clinic, training, borrowed out...">
+        </label>
+        <button id="addRequestBtn">Add item</button>
+        <div id="requestList" class="request-list"></div>
+      </section>
+
+      <section>
+        <h2>Legend</h2>
+        <div id="sideLegend" class="legend-list"></div>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <div class="toolbar">
+        <div>
+          <strong id="periodLabel"></strong>
+          <span id="statusText"></span>
+        </div>
+        <div class="tabs" role="tablist">
+          <button class="active" data-view="roster">Roster</button>
+          <button data-view="staff">Staff</button>
+          <button data-view="requests">Requests</button>
+          <button data-view="balances">Balances</button>
+          <button data-view="history">History</button>
+          <button data-view="criteria">Criteria</button>
+          <button data-view="pitch">Pitch</button>
+        </div>
+      </div>
+
+      <div id="rosterView" class="table-wrap"></div>
+      <div id="staffView" class="staff-view hidden"></div>
+      <div id="requestsView" class="staff-view hidden"></div>
+      <div id="balancesView" class="staff-view hidden"></div>
+      <div id="historyView" class="staff-view hidden"></div>
+      <div id="criteriaView" class="staff-view hidden"></div>
+      <div id="pitchView" class="staff-view hidden"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
