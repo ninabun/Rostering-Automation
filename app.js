@@ -508,8 +508,8 @@ function renderRequestControls() {
   list.innerHTML = dept().requests.length ? dept().requests.map((request, index) => {
     const person = dept().staff.find(item => item.id === request.staffId);
     const type = request.type === "fixed" ? "Fixed" : "Request";
-    const note = request.note ? ` Â· ${request.note}` : "";
-    return `<div class="request-item"><span>${type}: ${person?.name || request.staffId} Â· ${dateDisplay(request.day)} Â· <b>${request.duty}</b>${note}</span><button data-remove-request="${index}">x</button></div>`;
+    const note = request.note ? ` - ${request.note}` : "";
+    return `<div class="request-item"><span>${type}: ${person?.name || request.staffId} - ${dateDisplay(request.day)} - <b>${request.duty}</b>${note}</span><button data-remove-request="${index}">x</button></div>`;
   }).join("") : `<p>No request yet.</p>`;
 }
 
@@ -521,9 +521,30 @@ function renderRoster() {
   const d = dept();
   const roster = d.roster && Object.keys(d.roster).length ? d.roster : emptyRoster();
   const days = Array.from({ length: DAYS }, (_, i) => i);
+  const requestCount = d.requests.filter(item => item.type !== "fixed").length;
+  const fixedCount = d.requests.filter(item => item.type === "fixed").length;
+  const activeStaff = d.staff.length;
+  const coreStaff = d.staff.filter(isCoreStaff).length;
+  const studentStaff = d.staff.filter(isStudent).length;
+  const versionLabel = d.lastGenerated?.label || "Current draft";
+  const dashboard = `
+    <div class="roster-dashboard">
+      <div class="dashboard-main">
+        <span class="eyebrow">Live roster workspace</span>
+        <h2>${d.name}</h2>
+        <p>${d.organization} - ${dateDisplay(0, true)} to ${dateDisplay(LAST_DAY, true)}</p>
+      </div>
+      <div class="metric-grid">
+        <div class="metric-card"><span>Staff</span><strong>${activeStaff}</strong><small>${coreStaff} core / ${studentStaff} student</small></div>
+        <div class="metric-card"><span>Requests</span><strong>${requestCount}</strong><small>Green R markers</small></div>
+        <div class="metric-card"><span>Fixed</span><strong>${fixedCount}</strong><small>Yellow F markers</small></div>
+        <div class="metric-card"><span>Version</span><strong>${versionLabel}</strong><small>Audit-ready history</small></div>
+      </div>
+    </div>`;
   const head = `
     <div class="sheet-head">
       <div>
+        <div class="print-kicker">Generated Duty Roster</div>
         <div class="meta-line"><strong>Department:</strong><span>${d.name}</span></div>
         <div class="meta-line"><strong>Prepared by:</strong><span>${d.preparedBy}</span></div>
       </div>
@@ -563,7 +584,8 @@ function renderRoster() {
   const summary = [
     ["A core", "A", "core"], ["P core", "P", "core"], ["N core", "N", "core"], ["Student A extra", "A", "student"], ["Student P extra", "P", "student"]
   ].map(([label, group, mode]) => `<tr class="summary-row"><td colspan="5" class="summary-label">${label}</td>${days.map(i => `<td>${countDuty(roster, i, group, mode)}</td>`).join("")}<td class="divider-left"></td><td></td><td></td><td></td></tr>`).join("");
-  document.getElementById("rosterView").innerHTML = `<div class="roster-sheet">${head}<table>${tableHead}<tbody>${body}${summary}</tbody></table></div>`;
+  const legend = `<div class="sheet-legend"><span><b class="legend-dot marker-request">R</b> Staff request</span><span><b class="legend-dot marker-fixed">F</b> Fixed assignment</span><span><b class="legend-swatch duty-a"></b> A / Day</span><span><b class="legend-swatch duty-p"></b> P</span><span><b class="legend-swatch duty-n"></b> N</span><span><b class="legend-swatch duty-o"></b> Off</span></div>`;
+  document.getElementById("rosterView").innerHTML = `${dashboard}<div class="roster-sheet">${head}${legend}<table>${tableHead}<tbody>${body}${summary}</tbody></table></div>`;
   document.getElementById("statusText").textContent = `${validationText(roster)}${generationStatus()}`;
 }
 
