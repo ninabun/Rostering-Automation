@@ -225,6 +225,15 @@ th {
   text-decoration: none;
 }
 
+.marker-request {
+  background: var(--accent);
+}
+
+.marker-fixed {
+  background: #d69e2e;
+  color: #1f2933;
+}
+
 .duty-a, .duty-a1, .duty-d1, .duty-d2, .duty-d3, .duty-d4, .duty-d, .duty-hd1, .duty-hd4 { background: var(--day); }
 .duty-p { background: var(--pm); }
 .duty-n, .duty-cn { background: var(--night); }

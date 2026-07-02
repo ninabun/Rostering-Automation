@@ -554,7 +554,8 @@ function renderRoster() {
       const request = requestFor(person.id, i);
       const cls = `duty-${duty.toLowerCase()} ${isLocked(person.id, i) ? "locked" : ""}`;
       const title = request?.note ? `${request.type || "request"}: ${request.note}` : "";
-      const marker = request ? `<span class="request-marker">${request.type === "fixed" ? "F" : "R"}</span>` : "";
+      const markerType = request?.type === "fixed" ? "fixed" : "request";
+      const marker = request ? `<span class="request-marker marker-${markerType}">${request.type === "fixed" ? "F" : "R"}</span>` : "";
       return `<td class="duty-cell ${cls}" title="${title}">${duty}${marker}</td>`;
     }).join("");
     return `<tr class="${prev && prev.rank !== person.rank ? "divider-top" : ""}"><td class="rank-col left-cell">${person.rank}</td><td>${person.apptDate}</td><td class="name-col">${person.name}</td><td>${person.cName || ""}</td><td>${person.catg}</td>${cells}<td class="divider-left">${person.owing?.SH ?? 0}</td><td>${person.owing?.PH ?? 0}</td><td>${person.owing?.O ?? 0}</td><td>${person.owing?.WO ?? 0}</td></tr>`;
