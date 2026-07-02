@@ -9,9 +9,9 @@
   --accent-dark: #063f35;
   --gold: #d69e2e;
   --warn: #b4532f;
-  --day: #fff4c2;
-  --pm: #dbeafe;
-  --night: #fde2d3;
+  --day: #f6edbf;
+  --pm: #d7e8ec;
+  --night: #ead8cf;
   --off: #eef2f0;
   --leave: #ddf4df;
   --shadow: 0 18px 45px rgba(20, 35, 28, .12);
@@ -53,16 +53,16 @@ button:hover {
   gap: 18px;
   min-height: 88px;
   padding: 18px 24px;
-  background: #0f241e;
+  background: linear-gradient(135deg, #eef7f0 0%, #dcebe4 48%, #c8ded5 100%);
   border-bottom: 1px solid rgba(255, 255, 255, .12);
-  color: #fff;
+  color: var(--accent-dark);
 }
 
 h1, h2, p { margin: 0; }
 h1 { font-size: 25px; letter-spacing: 0; }
 h2 { margin-bottom: 12px; font-size: 15px; }
 p { margin-top: 4px; color: var(--muted); font-size: 13px; }
-.topbar p { color: #bfd0c9; }
+.topbar p { color: #55645f; }
 
 .actions, .tabs {
   display: flex;
@@ -77,15 +77,15 @@ p { margin-top: 4px; color: var(--muted); font-size: 13px; }
 }
 
 .actions button {
-  border-color: rgba(255, 255, 255, .22);
-  background: rgba(255, 255, 255, .08);
-  color: #fff;
+  border-color: rgba(6, 63, 53, .16);
+  background: rgba(255, 255, 255, .72);
+  color: var(--accent-dark);
 }
 
 .actions button:first-child {
-  background: #f3c969;
-  border-color: #f3c969;
-  color: #1f2933;
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #fff;
 }
 
 .layout {
@@ -393,9 +393,20 @@ th {
   color: #1f2933;
 }
 
-.duty-a, .duty-a1, .duty-d1, .duty-d2, .duty-d3, .duty-d4, .duty-d, .duty-hd1, .duty-hd4 { background: var(--day); }
-.duty-p { background: var(--pm); }
-.duty-n, .duty-cn { background: var(--night); }
+.duty-a, .duty-a1, .duty-d1, .duty-d2, .duty-d3, .duty-d4, .duty-d, .duty-hd1, .duty-hd4 {
+  background: var(--day);
+  color: #554813;
+}
+
+.duty-p {
+  background: var(--pm);
+  color: #234a55;
+}
+
+.duty-n, .duty-cn {
+  background: var(--night);
+  color: #62372f;
+}
 .duty-o, .duty-wo { background: var(--off); text-decoration: underline; }
 .duty-al, .duty-ndd, .duty-cclv { background: var(--leave); }
 .locked { outline: 2px solid #b7791f; outline-offset: -2px; }
@@ -595,6 +606,16 @@ th {
 
 .balance-table {
   min-width: 980px;
+}
+
+.balance-table th:first-child,
+.balance-table td:first-child {
+  width: 210px;
+  max-width: 210px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.2;
 }
 
 .staff-card strong { font-size: 15px; }
